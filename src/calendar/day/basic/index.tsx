@@ -9,7 +9,7 @@ import styleConstructor from './style';
 export interface BasicDayProps extends ViewProps {
   /** Theme object */
   theme?: Theme;
-  /** The Day's state ('selected' | 'disabled' | 'inactive' | 'today' | '') */
+  /** The Day's state ('selected' | 'disabled' | 'inactive' | 'today' | 'week-number' | '') */
   state?: DayState;
   /** The marking object */
   marking?: MarkingProps;
@@ -54,6 +54,7 @@ const BasicDay = (props: BasicDayProps) => {
   const isDisabled = typeof _marking.disabled !== 'undefined' ? _marking.disabled : state === 'disabled';
   const isInactive = typeof marking?.inactive !== 'undefined' ? marking.inactive : state === 'inactive';
   const isToday = typeof marking?.today !== 'undefined' ? marking.today : state === 'today';
+  const isWeekNumber = state === 'week-number';
   const isMultiDot = markingType === Marking.markings.MULTI_DOT;
   const isMultiPeriod = markingType === Marking.markings.MULTI_PERIOD;
   const isCustom = markingType === Marking.markings.CUSTOM;
@@ -83,6 +84,8 @@ const BasicDay = (props: BasicDayProps) => {
       }
     } else if (isToday) {
       styles.push(style.current.today);
+    } else if (isWeekNumber) {
+      styles.push(style.current.weekNumber);
     }
 
     //Custom marking type
@@ -111,6 +114,8 @@ const BasicDay = (props: BasicDayProps) => {
       styles.push(style.current.todayText);
     } else if (isInactive) {
       styles.push(style.current.inactiveText);
+    } else if (isWeekNumber) {
+      styles.push(style.current.weekNumberText);
     }
 
     // Custom marking type
